@@ -1,0 +1,91 @@
+/**
+ * SARIF 2.1.0 and Markdown rendering for statistical findings.
+ *
+ * Every finding names the reported value, the recomputed value and the exact
+ * character range, so a reviewer can check it in seconds. Nothing is described
+ * as misconduct: the text says "the reported p does not follow from the
+ * reported statistic".
+ *
+ * @module dsh-statcheck/report
+ */
+
+import type { StatFinding } from './check.ts'
+
+/** Minimal SARIF shapes emitted here. */
+export interface StatSarifResult {
+  readonly ruleId: string
+  readonly level: 'error' | 'warning' | 'note'
+  readonly message: { readonly text: string }
+  readonly locations: readonly {
+    readonly physicalLocation: {
+      readonly artifactLocation: { readonly uri: string }
+      readonly region: { readonly startLine: number; readonly startColumn: number }
+    }
+  }[]
+  readonly properties: Record<string, unknown>
+}
+
+/** Render findings as a SARIF 2.1.0 log. */
+export function findingsToSarif(findings: readonly StatFinding[], version: string): Record<string, unknown> {
+  const results: StatSarifResult[] = findings
+    .filter(finding => finding.status === 'inconsistent')
+    .map(finding => ({
+      ruleId: `statcheck/${finding.issue ?? 'p-value'}`,
+      level: 'error',
+      message: {
+        text: `${finding.text}: ${finding.detail}`,
+      },
+      locations: [
+        {
+          physicalLocation: {
+            artifactLocation: { uri: 'manuscript.txt' },
+            region: { startLine: 1, startColumn: finding.charStart + 1 },
+          },
+        },
+      ],
+      properties: {
+        statistic: finding.statistic,
+        df: [...finding.df],
+        reportedP: finding.reported.p ?? null,
+        recomputedP: Number(finding.recomputed.p.toFixed(6)),
+        issue: finding.issue ?? null,
+        charStart: finding.charStart,
+        charEnd: finding.charEnd,
+      },
+    }))
+  const rules = [...new Set(results.map(result => result.ruleId))].map(id => ({ id, name: id.split('/')[1] ?? 'finding' }))
+  return {
+    $schema: 'https://json.schemastore.org/sarif-2.1.0.json',
+    version: '2.1.0',
+    runs: [
+      {
+        tool: { driver: { name: 'dsh-statcheck', version, ...(rules.length === 0 ? {} : { rules }) } },
+        results,
+      },
+    ],
+  }
+}
+
+/** Render findings as a Markdown table plus a short explanation. */
+export function findingsToMarkdown(findings: readonly StatFinding[], summary: { total: number; consistent: number; inconsistent: number; unparsed: number }): string {
+  const lines: string[] = []
+  lines.push('# Statistical consistency report')
+  lines.push('')
+  lines.push(
+    `${summary.total} reported statistic(s): ${summary.consistent} consistent, ${summary.inconsistent} inconsistent, ${summary.unparsed} unparsed.`,
+  )
+  lines.push('')
+  if (summary.inconsistent > 0) {
+    lines.push('> These findings mean **the reported p value does not follow from the reported statistic**. They do not imply misconduct, and they are not a substitute for a statistician reviewing the analysis.')
+    lines.push('')
+  }
+  lines.push('| # | Reported | Recomputed p | Status | Detail | Chars |')
+  lines.push('|---:|---|---:|---|---|---|')
+  findings.forEach((finding, index) => {
+    const recomputed = Number.isNaN(finding.recomputed.p) ? 'n/a' : finding.recomputed.p.toFixed(4)
+    lines.push(
+      `| ${index + 1} | \`${finding.text}\` | ${recomputed} | ${finding.status}${finding.issue === undefined ? '' : ` (${finding.issue})`} | ${finding.detail.replace(/\|/gu, '\\|')} | ${finding.charStart}-${finding.charEnd} |`,
+    )
+  })
+  return `${lines.join('\n')}\n`
+}

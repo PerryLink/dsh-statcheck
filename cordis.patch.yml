@@ -1,0 +1,18 @@
+# dsh-statcheck bundle patch: mount the statistical consistency tools.
+#
+# Every key below is a Config field (Schemastery schema); invalid values fail
+# the profile load loudly. Analysis is local and deterministic — no network.
+- insert:
+    - id: dsh-statcheck
+      name: dsh-statcheck
+      config:
+        # Master switch. On by default; `false` mounts no tools at all.
+        enabled: true
+        # Store/record root, resolved against the harness working directory.
+        root: .statcheck
+        # Hard cap on analyzed characters; over-limit input fails, never truncates.
+        maxChars: 2000000
+        # Hard cap on findings per call.
+        maxFindings: 500
+        # Persist the analyzed text as a REP snapshot + record.
+        persist: true

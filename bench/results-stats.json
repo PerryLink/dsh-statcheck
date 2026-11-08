@@ -1,0 +1,298 @@
+{
+  "generatedAt": "2026-11-08T09:12:01.713Z",
+  "command": "node bench/run-stats.mjs",
+  "benchDir": "/mnt/d/Projects/dsh/plugins/dsh-research-bench",
+  "metrics": {
+    "dataset": {
+      "name": "stats",
+      "version": "0.1.0",
+      "total": 30,
+      "cases": 30
+    },
+    "plugin": "@perrylink/dsh-statcheck",
+    "inconsistentDetection": {
+      "precision": 1,
+      "recall": 1,
+      "f1": 1,
+      "tp": 20,
+      "fp": 0,
+      "fn": 0
+    },
+    "cleanFalsePositiveRate": 0,
+    "issueAccuracyWhenFlagged": 1,
+    "exactAccuracy": 1,
+    "cleanCases": 10
+  },
+  "predictions": [
+    {
+      "id": "stat-0001",
+      "prediction": {
+        "verdict": "consistent",
+        "issue": null,
+        "reportedP": ".050",
+        "recomputedP": 0.050043
+      }
+    },
+    {
+      "id": "stat-0002",
+      "prediction": {
+        "verdict": "consistent",
+        "issue": null,
+        "reportedP": ".050",
+        "recomputedP": 0.050012
+      }
+    },
+    {
+      "id": "stat-0003",
+      "prediction": {
+        "verdict": "consistent",
+        "issue": null,
+        "reportedP": ".050",
+        "recomputedP": 0.050033
+      }
+    },
+    {
+      "id": "stat-0004",
+      "prediction": {
+        "verdict": "consistent",
+        "issue": null,
+        "reportedP": ".050",
+        "recomputedP": 0.050005
+      }
+    },
+    {
+      "id": "stat-0005",
+      "prediction": {
+        "verdict": "consistent",
+        "issue": null,
+        "reportedP": ".050",
+        "recomputedP": 0.049997
+      }
+    },
+    {
+      "id": "stat-0006",
+      "prediction": {
+        "verdict": "consistent",
+        "issue": null,
+        "reportedP": ".050",
+        "recomputedP": 0.050014
+      }
+    },
+    {
+      "id": "stat-0007",
+      "prediction": {
+        "verdict": "consistent",
+        "issue": null,
+        "reportedP": ".050",
+        "recomputedP": 0.050012
+      }
+    },
+    {
+      "id": "stat-0008",
+      "prediction": {
+        "verdict": "consistent",
+        "issue": null,
+        "reportedP": ".050",
+        "recomputedP": 0.050005
+      }
+    },
+    {
+      "id": "stat-0009",
+      "prediction": {
+        "verdict": "consistent",
+        "issue": null,
+        "reportedP": ".050",
+        "recomputedP": 0.049996
+      }
+    },
+    {
+      "id": "stat-0010",
+      "prediction": {
+        "verdict": "consistent",
+        "issue": null,
+        "reportedP": ".019",
+        "recomputedP": 0.018551
+      }
+    },
+    {
+      "id": "stat-0011",
+      "prediction": {
+        "verdict": "inconsistent",
+        "issue": "p-value",
+        "reportedP": ".010",
+        "recomputedP": 0.050043
+      }
+    },
+    {
+      "id": "stat-0012",
+      "prediction": {
+        "verdict": "inconsistent",
+        "issue": "p-value",
+        "reportedP": ".001",
+        "recomputedP": 0.050012
+      }
+    },
+    {
+      "id": "stat-0013",
+      "prediction": {
+        "verdict": "inconsistent",
+        "issue": "p-value",
+        "reportedP": ".010",
+        "recomputedP": 0.050005
+      }
+    },
+    {
+      "id": "stat-0014",
+      "prediction": {
+        "verdict": "inconsistent",
+        "issue": "p-value",
+        "reportedP": ".010",
+        "recomputedP": 0.050014
+      }
+    },
+    {
+      "id": "stat-0015",
+      "prediction": {
+        "verdict": "inconsistent",
+        "issue": "p-value",
+        "reportedP": ".010",
+        "recomputedP": 0.050005
+      }
+    },
+    {
+      "id": "stat-0016",
+      "prediction": {
+        "verdict": "inconsistent",
+        "issue": "p-value",
+        "reportedP": ".010",
+        "recomputedP": 0.049996
+      }
+    },
+    {
+      "id": "stat-0017",
+      "prediction": {
+        "verdict": "inconsistent",
+        "issue": "p-value",
+        "reportedP": ".050",
+        "recomputedP": 0.018551
+      }
+    },
+    {
+      "id": "stat-0018",
+      "prediction": {
+        "verdict": "inconsistent",
+        "issue": "p-value",
+        "reportedP": ".010",
+        "recomputedP": 0.04993
+      }
+    },
+    {
+      "id": "stat-0019",
+      "prediction": {
+        "verdict": "inconsistent",
+        "issue": "p-value",
+        "reportedP": ".010",
+        "recomputedP": 0.049994
+      }
+    },
+    {
+      "id": "stat-0020",
+      "prediction": {
+        "verdict": "inconsistent",
+        "issue": "p-value",
+        "reportedP": ".010",
+        "recomputedP": 0.050314
+      }
+    },
+    {
+      "id": "stat-0021",
+      "prediction": {
+        "verdict": "inconsistent",
+        "issue": "p-value",
+        "reportedP": ".050",
+        "recomputedP": 0.617075
+      }
+    },
+    {
+      "id": "stat-0022",
+      "prediction": {
+        "verdict": "inconsistent",
+        "issue": "p-value",
+        "reportedP": ".010",
+        "recomputedP": 0.620982
+      }
+    },
+    {
+      "id": "stat-0023",
+      "prediction": {
+        "verdict": "inconsistent",
+        "issue": "p-value",
+        "reportedP": ".010",
+        "recomputedP": 0.381099
+      }
+    },
+    {
+      "id": "stat-0024",
+      "prediction": {
+        "verdict": "inconsistent",
+        "issue": "p-value",
+        "reportedP": ".010",
+        "recomputedP": 0.317311
+      }
+    },
+    {
+      "id": "stat-0025",
+      "prediction": {
+        "verdict": "inconsistent",
+        "issue": "ci",
+        "reportedP": ".036",
+        "recomputedP": 0.036225
+      }
+    },
+    {
+      "id": "stat-0026",
+      "prediction": {
+        "verdict": "inconsistent",
+        "issue": "ci",
+        "reportedP": ".019",
+        "recomputedP": 0.018551
+      }
+    },
+    {
+      "id": "stat-0027",
+      "prediction": {
+        "verdict": "inconsistent",
+        "issue": "p-value",
+        "reportedP": ".500",
+        "recomputedP": 0.050014
+      }
+    },
+    {
+      "id": "stat-0028",
+      "prediction": {
+        "verdict": "inconsistent",
+        "issue": "format",
+        "reportedP": ".000",
+        "recomputedP": 0.050043
+      }
+    },
+    {
+      "id": "stat-0029",
+      "prediction": {
+        "verdict": "inconsistent",
+        "issue": "format",
+        "reportedP": "1.20",
+        "recomputedP": 0.050005
+      }
+    },
+    {
+      "id": "stat-0030",
+      "prediction": {
+        "verdict": "inconsistent",
+        "issue": "p-threshold",
+        "reportedP": ".010",
+        "recomputedP": 0.050043
+      }
+    }
+  ]
+}
