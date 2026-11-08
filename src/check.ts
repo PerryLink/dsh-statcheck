@@ -127,11 +127,13 @@ export function recomputeP(input: { statistic: StatisticKind; value: number; df:
     if (df1 === undefined || df2 === undefined || df1 <= 0 || df2 <= 0) {
       throw new StatInputError('OUT_OF_DOMAIN', 'F requires df1 > 0 and df2 > 0')
     }
+    if (value < 0) throw new StatInputError('OUT_OF_DOMAIN', 'F must be >= 0 (a negative F is not a statistic)')
     return fUpperP(value, df1, df2)
   }
   if (statistic === 'chi2') {
     const df1 = df[0]
     if (df1 === undefined || df1 <= 0) throw new StatInputError('OUT_OF_DOMAIN', 'chi-square requires df > 0')
+    if (value < 0) throw new StatInputError('OUT_OF_DOMAIN', 'chi-square must be >= 0 (a negative χ² is not a statistic)')
     return chiSquareUpperP(value, df1)
   }
   if (statistic === 'r') {

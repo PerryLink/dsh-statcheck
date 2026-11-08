@@ -131,6 +131,16 @@ export class StatcheckRuntime {
     return this.#now().toISOString()
   }
 
+  /**
+   * Clamp a per-call findings cap to the configured hard cap.
+   * @param requested - the caller's value, when present.
+   * @returns a positive cap never larger than `config.maxFindings`.
+   */
+  #maxFindings(requested: number | undefined): number {
+    if (requested === undefined || !Number.isSafeInteger(requested) || requested <= 0) return this.config.maxFindings
+    return Math.min(requested, this.config.maxFindings)
+  }
+
   /** The evidence port. */
   port(): EvidencePort {
     if (this.#service !== undefined) return this.#service
@@ -196,7 +206,7 @@ export class StatcheckRuntime {
       sourceRef = { kind: 'file', id: resolved.id, retrievedAt: this.iso() }
     }
 
-    const { findings, summary } = analyzeText(text, { maxFindings: request.maxFindings ?? this.config.maxFindings })
+    const { findings, summary } = analyzeText(text, { maxFindings: this.#maxFindings(request.maxFindings) })
     const persist = request.persist ?? this.config.persist
     if (!persist) return { ok: true, summary, findings, source }
 
@@ -204,14 +214,29 @@ export class StatcheckRuntime {
     let evidence: Evidence
     try {
       const captured = await port.capture({ bytes: text, mediaType, sourceRef, capturedAt: this.iso() })
+      // The snapshot is immutable, so its capture time is the stable retrieval
+      // time: re-checking unchanged text dedupes instead of conflicting. The
+      // findings are part of the identity so a different cap/result is a
+      // different evidence item rather than an EVIDENCE_CONFLICT.
+      const evidenceSourceRef = {
+        ...sourceRef,
+        retrievedAt: captured.snapshot.capturedAt,
+      }
       evidence = (
         await port.addEvidence({
-          evidenceId: stableId('ev', ['statcheck', source.kind, source.id, captured.snapshot.snapshotId]),
+          evidenceId: stableId('ev', [
+            'statcheck',
+            source.kind,
+            source.id,
+            captured.snapshot.snapshotId,
+            summary.total,
+            ...findings.map(finding => finding.findingId),
+          ]),
           title: `Statistical report of ${source.id}`,
-          sourceRef,
+          sourceRef: evidenceSourceRef,
           snapshotIds: [captured.snapshot.snapshotId],
           anchors: [{ snapshotId: captured.snapshot.snapshotId, kind: 'record', value: 'field:text' }],
-          provenance: { plugin: 'dsh-statcheck', version: VERSION, method: 'apa-stat-consistency', retrievedAt: this.iso() },
+          provenance: { plugin: 'dsh-statcheck', version: VERSION, method: 'apa-stat-consistency', retrievedAt: captured.snapshot.capturedAt },
           checks: findings.map(findingToCheck),
           notes: `${summary.total} statistic(s): ${summary.consistent} consistent, ${summary.inconsistent} inconsistent, ${summary.unparsed} unparsed`,
         })

@@ -4,7 +4,7 @@
  */
 
 import { describe, expect, it } from 'vitest'
-import { analyzeText, judgeP, recomputeP } from '../src/check.ts'
+import { analyzeText, judgeP, recomputeP, StatInputError } from '../src/check.ts'
 
 /** Analyze one sentence and return its single finding. */
 function one(text: string) {
@@ -99,6 +99,11 @@ describe('recomputeP and judgeP', () => {
     expect(recomputeP({ statistic: 'chi2', value: 3.841, df: [1] })).toBeCloseTo(0.05, 3)
     expect(recomputeP({ statistic: 'r', value: 0.361, df: [28] })).toBeCloseTo(0.05, 3)
     expect(recomputeP({ statistic: 'z', value: 1.96, df: [] })).toBeCloseTo(0.05, 4)
+  })
+
+  it('rejects negative F and chi-square values as out of domain', () => {
+    expect(() => recomputeP({ statistic: 'F', value: -1, df: [1, 20] })).toThrow(StatInputError)
+    expect(() => recomputeP({ statistic: 'chi2', value: -1, df: [1] })).toThrow(StatInputError)
   })
 
   it('applies the documented rounding tolerance', () => {

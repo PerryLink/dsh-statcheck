@@ -25,34 +25,43 @@ export interface StatSarifResult {
   readonly properties: Record<string, unknown>
 }
 
+/** Read a finite recomputed p, tolerating the JSON `null` a df error emits. */
+function recomputedOf(finding: StatFinding): number | undefined {
+  const value: unknown = finding.recomputed?.p
+  return typeof value === 'number' && Number.isFinite(value) ? value : undefined
+}
+
 /** Render findings as a SARIF 2.1.0 log. */
 export function findingsToSarif(findings: readonly StatFinding[], version: string): Record<string, unknown> {
   const results: StatSarifResult[] = findings
     .filter(finding => finding.status === 'inconsistent')
-    .map(finding => ({
-      ruleId: `statcheck/${finding.issue ?? 'p-value'}`,
-      level: 'error',
-      message: {
-        text: `${finding.text}: ${finding.detail}`,
-      },
-      locations: [
-        {
-          physicalLocation: {
-            artifactLocation: { uri: 'manuscript.txt' },
-            region: { startLine: 1, startColumn: finding.charStart + 1 },
-          },
+    .map(finding => {
+      const recomputed = recomputedOf(finding)
+      return {
+        ruleId: `statcheck/${finding.issue ?? 'p-value'}`,
+        level: 'error' as const,
+        message: {
+          text: `${finding.text}: ${finding.detail}`,
         },
-      ],
-      properties: {
-        statistic: finding.statistic,
-        df: [...finding.df],
-        reportedP: finding.reported.p ?? null,
-        recomputedP: Number(finding.recomputed.p.toFixed(6)),
-        issue: finding.issue ?? null,
-        charStart: finding.charStart,
-        charEnd: finding.charEnd,
-      },
-    }))
+        locations: [
+          {
+            physicalLocation: {
+              artifactLocation: { uri: 'manuscript.txt' },
+              region: { startLine: 1, startColumn: finding.charStart + 1 },
+            },
+          },
+        ],
+        properties: {
+          statistic: finding.statistic,
+          df: [...finding.df],
+          reportedP: finding.reported.p ?? null,
+          recomputedP: recomputed === undefined ? null : Number(recomputed.toFixed(6)),
+          issue: finding.issue ?? null,
+          charStart: finding.charStart,
+          charEnd: finding.charEnd,
+        },
+      }
+    })
   const rules = [...new Set(results.map(result => result.ruleId))].map(id => ({ id, name: id.split('/')[1] ?? 'finding' }))
   return {
     $schema: 'https://json.schemastore.org/sarif-2.1.0.json',
@@ -82,9 +91,10 @@ export function findingsToMarkdown(findings: readonly StatFinding[], summary: { 
   lines.push('| # | Reported | Recomputed p | Status | Detail | Chars |')
   lines.push('|---:|---|---:|---|---|---|')
   findings.forEach((finding, index) => {
-    const recomputed = Number.isNaN(finding.recomputed.p) ? 'n/a' : finding.recomputed.p.toFixed(4)
+    const recomputed = recomputedOf(finding)
+    const shown = recomputed === undefined ? 'n/a' : recomputed.toFixed(4)
     lines.push(
-      `| ${index + 1} | \`${finding.text}\` | ${recomputed} | ${finding.status}${finding.issue === undefined ? '' : ` (${finding.issue})`} | ${finding.detail.replace(/\|/gu, '\\|')} | ${finding.charStart}-${finding.charEnd} |`,
+      `| ${index + 1} | \`${finding.text}\` | ${shown} | ${finding.status}${finding.issue === undefined ? '' : ` (${finding.issue})`} | ${finding.detail.replace(/\|/gu, '\\|')} | ${finding.charStart}-${finding.charEnd} |`,
     )
   })
   return `${lines.join('\n')}\n`

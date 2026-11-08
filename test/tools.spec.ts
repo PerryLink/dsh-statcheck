@@ -96,4 +96,20 @@ describe('tool interfaces', () => {
     expect(value.sarif.version).toBe('2.1.0')
     expect(value.sarif.runs[0]?.results.length).toBe(1)
   })
+
+  it('stat_report renders a df-error finding whose recomputed p is null in JSON', async () => {
+    const check = makeStatCheckTool(runtime())
+    const checked = (await check.execute({ text: 't(0) = 2.048, p = .050', persist: false }, EXEC)) as {
+      findings: Array<{ recomputed: { p: number | null } }>
+    }
+    expect(checked.findings[0]?.recomputed.p).toBeNull()
+    const value = (await makeStatReportTool().execute({ findings: checked.findings }, EXEC)) as {
+      ok: boolean
+      markdown: string
+      sarif: { runs: Array<{ results: Array<{ properties: { recomputedP: number | null } }> }> }
+    }
+    expect(value.ok).toBe(true)
+    expect(value.markdown).toContain('n/a')
+    expect(value.sarif.runs[0]?.results[0]?.properties.recomputedP).toBeNull()
+  })
 })

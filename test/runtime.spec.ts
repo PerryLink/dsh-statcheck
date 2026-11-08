@@ -78,6 +78,26 @@ describe('check', () => {
   it('requires exactly one of text/path', async () => {
     await expect(runtime().check({})).rejects.toBeInstanceOf(StatcheckError)
   })
+
+  it('re-checks the same text without an evidence conflict', async () => {
+    const initial = await runtime().check({ text: TEXT })
+    const later = new StatcheckRuntime({
+      config: resolveConfig({ workspaceRoot: workspace, root: path.join(workspace, '.statcheck') }),
+      now: () => new Date('2026-05-02T09:00:00.000Z'),
+    })
+    const again = await later.check({ text: TEXT })
+    expect(again.evidenceId).toBe(initial.evidenceId)
+    expect(again.summary).toEqual(initial.summary)
+  })
+
+  it('clamps a per-call findings cap to the configured hard cap', async () => {
+    const rt = new StatcheckRuntime({
+      config: resolveConfig({ workspaceRoot: workspace, root: path.join(workspace, '.statcheck'), maxFindings: 1 }),
+      now: () => AT,
+    })
+    const result = await rt.check({ text: TEXT, maxFindings: 100, persist: false })
+    expect(result.summary.total).toBe(1)
+  })
 })
 
 describe('recompute', () => {

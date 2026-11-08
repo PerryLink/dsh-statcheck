@@ -6,6 +6,20 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Fixed
+
+- Re-checking unchanged text no longer fails with `STORE_ERROR`: evidence
+  identity is the immutable snapshot plus the findings, and retrieval times
+  come from the snapshot, so unchanged analysis dedupes while a different
+  findings cap produces distinct evidence.
+- `stat_report` no longer throws when a finding's recomputed p is `null` (the
+  JSON form of the NaN emitted for an impossible df); Markdown shows `n/a` and
+  SARIF records `recomputedP: null`.
+- A per-call `maxFindings` is clamped to the configured hard cap instead of
+  overriding it.
+- Negative F and χ² values are rejected as out of domain instead of being
+  mapped to p = 1.
+
 ## [0.1.0] - 2026-11-08
 
 First release: statistical consistency checking.
@@ -22,7 +36,7 @@ First release: statistical consistency checking.
   become evidence checks (pass/fail/skipped), and a sealed-able record is written.
 - Distribution implementations validated against published critical values
   (t, F, χ², r, z) in the test suite.
-- 37 tests; benchmark on `dsh-research-bench` stats v0.1.0 (30 cases): precision
+- 41 tests; benchmark on `dsh-research-bench` stats v0.1.0 (30 cases): precision
   1.00, recall 1.00, clean false-positive rate 0.00, exact accuracy 1.00.
 
 ### Notes

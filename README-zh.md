@@ -102,7 +102,7 @@ pnpm run bench:stats
 
 ### 测试
 
-- **37 个测试 / 5 个文件**：分布尾概率对公开临界值（t/F/χ²/r/z）、解析（各统计族、偏移、阈值、CI、多统计量、无 p）、判定（p-value/threshold/format/CI/df）、运行时（证据与合法 REP 记录、文件媒体类型、persist=false、路径逃逸、大小上限）、工具（schema、成功/失败、SARIF）、包契约。
+- **41 个测试 / 5 个文件**：分布尾概率对公开临界值（t/F/χ²/r/z）、解析（各统计族、偏移、阈值、CI、多统计量、无 p）、判定（p-value/threshold/format/CI/df、负数 F/χ² 域检查）、运行时（证据与合法 REP 记录、重复检查不产生证据冲突、findings 上限收口、文件媒体类型、persist=false、路径逃逸、大小上限）、工具（schema、成功/失败、含 null 重算 p 的 SARIF）、包契约。
 
 ## 已知限制（v0.1）
 
