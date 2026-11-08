@@ -97,6 +97,24 @@ describe('tool interfaces', () => {
     expect(value.sarif.runs[0]?.results.length).toBe(1)
   })
 
+  it('stat_report maps SARIF line and column when the source text is supplied', async () => {
+    const source = 'Intro line.\n\nReported: t(28) = 2.048, p = .010.\n'
+    const check = makeStatCheckTool(runtime())
+    const checked = (await check.execute({ text: source, persist: false }, EXEC)) as { findings: unknown[] }
+    const value = (await makeStatReportTool().execute({ findings: checked.findings, text: source }, EXEC)) as {
+      ok: boolean
+      sarif: {
+        runs: Array<{
+          results: Array<{ locations: Array<{ physicalLocation: { region: { startLine: number; startColumn: number } } }> }>
+        }>
+      }
+    }
+    expect(value.ok).toBe(true)
+    const region = value.sarif.runs[0]?.results[0]?.locations[0]?.physicalLocation.region
+    expect(region?.startLine).toBe(3)
+    expect(region?.startColumn).toBe(11)
+  })
+
   it('stat_report renders a df-error finding whose recomputed p is null in JSON', async () => {
     const check = makeStatCheckTool(runtime())
     const checked = (await check.execute({ text: 't(0) = 2.048, p = .050', persist: false }, EXEC)) as {

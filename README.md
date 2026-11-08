@@ -57,7 +57,7 @@ t/r/z are two-tailed; F/χ² upper-tail. `p` uses the same rounding rule as `sta
 
 ### `stat_report`
 
-`{ findings }` → `{ ok, markdown, sarif, summary }`. SARIF carries one error result per inconsistent finding.
+`{ findings, text? }` → `{ ok, markdown, sarif, summary }`. SARIF carries one error result per inconsistent finding. Pass the original manuscript text to map each finding's `charStart` to a real SARIF `startLine`/`startColumn`; without `text`, the region falls back to line 1 plus a character column (the `properties.charStart`/`charEnd` are always exact).
 
 ### Error codes
 
@@ -102,7 +102,7 @@ Raw per-case predictions: [`bench/results-stats.json`](bench/results-stats.json)
 
 ### Tests
 
-- **41 tests across 5 files**: distribution tails against published critical values (t/F/χ²/r/z), parsing (all families, offsets, thresholds, CIs, multiple statistics, unparsed), judging (p-value, threshold, format, CI, df, negative F/χ² domains), runtime (evidence + valid REP record, re-check without an evidence conflict, findings-cap clamp, file/media type, persist=false, path escapes, size cap), tools (schemas, success/failure, SARIF incl. a null recomputed p), package contract.
+- **42 tests across 5 files**: distribution tails against published critical values (t/F/χ²/r/z), parsing (all families, offsets, thresholds, CIs, multiple statistics, unparsed), judging (p-value, threshold, format, CI, df, negative F/χ² domains), runtime (evidence + valid REP record, re-check without an evidence conflict, findings-cap clamp, file/media type, persist=false, path escapes, size cap), tools (schemas, success/failure, SARIF incl. a null recomputed p and line/column mapping from optional text), package contract.
 
 ## Known limitations (v0.1)
 
@@ -110,6 +110,7 @@ Raw per-case predictions: [`bench/results-stats.json`](bench/results-stats.json)
 - Only APA-style inline reports are parsed; `p` values in tables are out of scope.
 - CI-versus-p checking assumes a two-sided test of the same effect at α = .05.
 - No correction for multiple comparisons.
+- SARIF line/column mapping needs the optional `stat_report` `text`; without it the region is line 1 + character column (the exact `charStart`/`charEnd` properties are always present).
 
 ## License
 

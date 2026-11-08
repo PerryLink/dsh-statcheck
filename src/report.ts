@@ -31,8 +31,20 @@ function recomputedOf(finding: StatFinding): number | undefined {
   return typeof value === 'number' && Number.isFinite(value) ? value : undefined
 }
 
+/**
+ * Map a UTF-16 character offset to a 1-based SARIF line/column.
+ * Without the source text the old line-1 + character-column fallback is kept.
+ */
+function regionOf(finding: StatFinding, text: string | undefined): { startLine: number; startColumn: number } {
+  if (text === undefined) return { startLine: 1, startColumn: finding.charStart + 1 }
+  const offset = Math.min(Math.max(finding.charStart, 0), text.length)
+  const before = text.slice(0, offset)
+  const lastNewline = before.lastIndexOf('\n')
+  return { startLine: before.split('\n').length, startColumn: offset - lastNewline }
+}
+
 /** Render findings as a SARIF 2.1.0 log. */
-export function findingsToSarif(findings: readonly StatFinding[], version: string): Record<string, unknown> {
+export function findingsToSarif(findings: readonly StatFinding[], version: string, text?: string): Record<string, unknown> {
   const results: StatSarifResult[] = findings
     .filter(finding => finding.status === 'inconsistent')
     .map(finding => {
@@ -47,7 +59,7 @@ export function findingsToSarif(findings: readonly StatFinding[], version: strin
           {
             physicalLocation: {
               artifactLocation: { uri: 'manuscript.txt' },
-              region: { startLine: 1, startColumn: finding.charStart + 1 },
+              region: regionOf(finding, text),
             },
           },
         ],

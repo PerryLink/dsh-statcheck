@@ -37,6 +37,7 @@ export function makeStatReportTool() {
     ].join('\n'),
     parameters: {
       findings: { type: 'array', items: { type: 'json' }, required: true, description: 'Findings from stat_check.' },
+      text: { type: 'string', description: 'Original manuscript text; when provided, SARIF line/column are mapped from each finding charStart.' },
     },
     output: {
       schema: OUTPUT_SCHEMA,
@@ -47,8 +48,9 @@ export function makeStatReportTool() {
       },
     },
     async execute(args: unknown) {
-      const request = args as { findings?: StatFinding[] }
+      const request = args as { findings?: StatFinding[]; text?: string }
       const findings = Array.isArray(request.findings) ? request.findings : []
+      const text = typeof request.text === 'string' ? request.text : undefined
       const summary = {
         total: findings.length,
         consistent: findings.filter(finding => finding.status === 'consistent').length,
@@ -58,7 +60,7 @@ export function makeStatReportTool() {
       return {
         ok: true as const,
         markdown: findingsToMarkdown(findings, summary),
-        sarif: findingsToSarif(findings, VERSION) as never,
+        sarif: findingsToSarif(findings, VERSION, text) as never,
         summary,
       }
     },

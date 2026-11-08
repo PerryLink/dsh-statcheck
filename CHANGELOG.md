@@ -19,6 +19,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   overriding it.
 - Negative F and χ² values are rejected as out of domain instead of being
   mapped to p = 1.
+- `stat_report` accepts an optional `text` and maps each finding's `charStart`
+  to a real SARIF line/column; without it the old line-1 fallback remains.
 
 ## [0.1.0] - 2026-11-08
 
@@ -36,7 +38,7 @@ First release: statistical consistency checking.
   become evidence checks (pass/fail/skipped), and a sealed-able record is written.
 - Distribution implementations validated against published critical values
   (t, F, χ², r, z) in the test suite.
-- 41 tests; benchmark on `dsh-research-bench` stats v0.1.0 (30 cases): precision
+- 42 tests; benchmark on `dsh-research-bench` stats v0.1.0 (30 cases): precision
   1.00, recall 1.00, clean false-positive rate 0.00, exact accuracy 1.00.
 
 ### Notes
