@@ -1,6 +1,6 @@
 {
   "name": "dsh-statcheck",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Recompute the statistics reported in a manuscript and flag self-inconsistent p values for DeepSeek Harness: APA-style t/F/chi-square/r/z parsing, two-tailed and upper-tail p values from zero-dependency distributions, CI-versus-p checks, exact character locators, Markdown and SARIF 2.1.0 output, and a REP v1 evidence record. Arithmetic, not accusation.",
   "author": "PerryLink contributors",
   "repository": {
