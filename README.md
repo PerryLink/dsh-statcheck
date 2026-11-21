@@ -124,7 +124,7 @@ Raw per-case predictions: [`bench/results-stats.json`](bench/results-stats.json)
 
 ### Tests
 
-- **42 tests across 5 files**: distribution tails against published critical values (t/F/χ²/r/z), parsing (all families, offsets, thresholds, CIs, multiple statistics, unparsed), judging (p-value, threshold, format, CI, df, negative F/χ² domains), runtime (evidence + valid REP record, re-check without an evidence conflict, findings-cap clamp, file/media type, persist=false, path escapes, size cap), tools (schemas, success/failure, SARIF incl. a null recomputed p and line/column mapping from optional text), package contract.
+- **43 tests across 6 files**: distribution tails against published critical values (t/F/χ²/r/z), parsing (all families, offsets, thresholds, CIs, multiple statistics, unparsed), judging (p-value, threshold, format, CI, df, negative F/χ² domains), runtime (evidence + valid REP record, re-check without an evidence conflict, findings-cap clamp, file/media type, persist=false, path escapes, size cap), tools (schemas, success/failure, SARIF incl. a null recomputed p and line/column mapping from optional text), package contract.
 
 ## Known limitations (v0.1)
 

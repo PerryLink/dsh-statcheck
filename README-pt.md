@@ -124,7 +124,7 @@ Predições brutas por caso: [`bench/results-stats.json`](bench/results-stats.js
 
 ### Testes
 
-- **42 testes em 5 arquivos**: caudas de distribuição contra valores críticos publicados (t/F/χ²/r/z), análise (todas as famílias, deslocamentos, limiares, CIs, várias estatísticas, não analisado), julgamento (p-value, limiar, formato, CI, df, domínios negativos de F/χ²), runtime (evidência + registro REP válido, reverificação sem conflito de evidência, limite de achados, tipo de arquivo/mídia, persist=false, escapes de caminho, limite de tamanho), ferramentas (esquemas, sucesso/falha, SARIF incl. um p recalculado nulo e o mapeamento de linha/coluna a partir do texto opcional) e contrato do pacote.
+- **43 testes em 6 arquivos**: caudas de distribuição contra valores críticos publicados (t/F/χ²/r/z), análise (todas as famílias, deslocamentos, limiares, CIs, várias estatísticas, não analisado), julgamento (p-value, limiar, formato, CI, df, domínios negativos de F/χ²), runtime (evidência + registro REP válido, reverificação sem conflito de evidência, limite de achados, tipo de arquivo/mídia, persist=false, escapes de caminho, limite de tamanho), ferramentas (esquemas, sucesso/falha, SARIF incl. um p recalculado nulo e o mapeamento de linha/coluna a partir do texto opcional) e contrato do pacote.
 
 ## Limitações conhecidas (v0.1)
 

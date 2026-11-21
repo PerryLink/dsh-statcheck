@@ -124,7 +124,7 @@ Predicciones sin procesar por caso: [`bench/results-stats.json`](bench/results-s
 
 ### Pruebas
 
-- **42 pruebas en 5 archivos**: colas de distribución frente a valores críticos publicados (t/F/χ²/r/z), análisis (todas las familias, desplazamientos, umbrales, CI, varias estadísticas, no analizado), juicio (p-value, umbral, formato, CI, df, dominios negativos de F/χ²), runtime (evidencia + registro REP válido, reverificación sin conflicto de evidencia, tope de hallazgos, tipo de archivo/media, persist=false, escapes de ruta, límite de tamaño), herramientas (esquemas, éxito/fallo, SARIF incl. un p recalculado nulo y el mapeo de línea/columna desde el texto opcional) y contrato del paquete.
+- **43 pruebas en 6 archivos**: colas de distribución frente a valores críticos publicados (t/F/χ²/r/z), análisis (todas las familias, desplazamientos, umbrales, CI, varias estadísticas, no analizado), juicio (p-value, umbral, formato, CI, df, dominios negativos de F/χ²), runtime (evidencia + registro REP válido, reverificación sin conflicto de evidencia, tope de hallazgos, tipo de archivo/media, persist=false, escapes de ruta, límite de tamaño), herramientas (esquemas, éxito/fallo, SARIF incl. un p recalculado nulo y el mapeo de línea/columna desde el texto opcional) y contrato del paquete.
 
 ## Limitaciones conocidas (v0.1)
 
