@@ -1,13 +1,22 @@
+<div align="center">
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-statcheck-hero-en-dark.webp">
+  <img src="docs/assets/dsh-statcheck-hero-en-light.webp" width="100%" alt="dsh-statcheck: a manuscript sentence reporting t(28) = 2.048 at p = .010, where the recomputed p is .0500 so the finding is inconsistent; F(2, 27) = 3.354 at p = .050 is consistent; the exact character ranges and the REP v1 evidence id are shown on the right">
+</picture>
+
 # dsh-statcheck
 
 **Recompute the statistics a manuscript reports — and flag the ones that do not add up.**
 
 *It is arithmetic, not accusation: each finding shows the reported statistic, the p value it actually implies, and the exact characters it came from.*
 
+[简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
+
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Node](https://img.shields.io/badge/node-%5E22.19%20%7C%7C%20%3E%3D24.9-brightgreen.svg)]()
 
-English · [简体中文](README-zh.md)
+</div>
 
 ---
 
@@ -18,6 +27,14 @@ English · [简体中文](README-zh.md)
 - Flags self-inconsistency with the reported value, the recomputed value, the character range and a stable issue code.
 - Checks the CI against significance (a significant p with a CI that includes 0 is a contradiction).
 - Emits Markdown and **SARIF 2.1.0**, and registers the analyzed text as a REP v1 evidence item whose checks are the findings.
+
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-statcheck-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-statcheck-flow-v5-light.svg" width="100%" alt="dsh-statcheck structure: an APA-style report is parsed into statistics and reported p values, the p value is recomputed from the statistic, each report is judged consistent or inconsistent with an exact character range, and the findings become a summary, a REP v1 evidence item and Markdown/SARIF output; the labels inside the diagram are the real tool, check and issue names">
+</picture>
+
+*Structure: parse → recompute → judge; `findings[]` and `summary` are the two outputs, and `stat_report` renders them as Markdown and SARIF 2.1.0. The token labels inside the diagram are the real tool, check and issue names, so the same picture serves all five languages.*
 
 ## What it does not do
 
@@ -80,6 +97,11 @@ The extra `0.001` absorbs the fact that the statistic itself is often reported r
 | `persist` | `true` | store a snapshot + REP record |
 
 ## Evaluation
+
+![dsh-statcheck benchmark: a real run over 30 frozen statistics cases — inconsistent precision, recall and F1 are 1, the clean false-positive rate is 0, and exact accuracy is 1](docs/assets/dsh-statcheck-demo.gif)
+
+*Animated: the benchmark adapter's real stdout over the 30 frozen statistics cases (`node bench/run-stats.mjs` with `BENCH_DIR` pointing at the frozen `dsh-research-bench` checkout, no network; re-run 2026-11-21). The perfect scores describe these constructed critical-value cases only — the scope warning below still applies.*
+
 
 ### Benchmark — `dsh-research-bench` stats v0.1.0 (30 cases)
 

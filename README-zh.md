@@ -1,13 +1,22 @@
+<div align="center">
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-statcheck-hero-zh-dark.webp">
+  <img src="docs/assets/dsh-statcheck-hero-zh-light.webp" width="100%" alt="dsh-statcheck 配图：稿件里报告 t(28) = 2.048，p = .010，重算 p 为 .0500，因此判为 inconsistent；同一段里 F(2, 27) = 3.354，p = .050 判为 consistent；右侧是精确字符区间与 REP v1 证据编号">
+</picture>
+
 # dsh-statcheck
 
 **重算稿件报告的统计数据 —— 并把对不上的那些标出来。**
 
 *这是算术，不是指控：每条 finding 都会给出报告的统计量、它实际蕴含的 p 值，以及它所依据的精确字符位置。*
 
+[English](README.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
+
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Node](https://img.shields.io/badge/node-%5E22.19%20%7C%7C%20%3E%3D24.9-brightgreen.svg)]()
 
-[English](README.md) · 简体中文
+</div>
 
 ---
 
@@ -18,6 +27,14 @@
 - 用报告值、重算值、字符区间与稳定的 issue code 标出自相矛盾之处。
 - 校验 CI 与显著性是否一致（p 显著，但 CI 包含 0，就是矛盾）。
 - 输出 Markdown 与 **SARIF 2.1.0**，并把被分析的文本注册为一条 REP v1 证据，其检查项就是这些 findings。
+
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-statcheck-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-statcheck-flow-v5-light.svg" width="100%" alt="dsh-statcheck 结构图：APA 风格的报告被解析为统计量与报告 p 值，由统计量重算 p，再逐条判定 consistent / inconsistent 并给出精确字符区间；findings 汇总为 summary、一条 REP v1 证据，以及 Markdown/SARIF 输出；图内标签就是真实的工具名、检查名与 issue code">
+</picture>
+
+*结构：解析 → 重算 → 判定；`findings[]` 与 `summary` 是两条输出，`stat_report` 把它们渲染成 Markdown 与 SARIF 2.1.0。图内只有工具名、检查名与 issue code，五语共用同一张结构图。*
 
 ## 它不做什么
 
@@ -80,6 +97,11 @@ t/r/z 为双尾，F/χ² 为上尾。`p` 使用与 `stat_check` 相同的舍入�
 | `persist` | `true` | 写入快照与 REP 记录 |
 
 ## 评测
+
+![dsh-statcheck 基准评测：30 条冻结统计用例的真实运行 —— 不一致 precision / recall / F1 均为 1，干净样本误报率为 0，整案完全一致率为 1](docs/assets/dsh-statcheck-demo.gif)
+
+*动图是基准适配器的真实 stdout：30 条冻结统计用例（`node bench/run-stats.mjs`，`BENCH_DIR` 指向冻结的 `dsh-research-bench` 检出，不联网；2026-11-21 复跑）。满分只描述这些构造好的临界值用例 —— 下面的范围警告依然适用。*
+
 
 ### 基准评测 —— `dsh-research-bench` stats v0.1.0（30 条用例）
 
