@@ -28,7 +28,6 @@
 - Comprueba el CI frente a la significación (un p significativo con un CI que incluye 0 es una contradicción).
 - Emite Markdown y **SARIF 2.1.0**, y registra el texto analizado como un elemento de evidencia REP v1 cuyas comprobaciones son los hallazgos.
 
-
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-statcheck-flow-v5-dark.svg">
   <img src="docs/assets/dsh-statcheck-flow-v5-light.svg" width="100%" alt="dsh-statcheck estructura: un informe de estilo APA se analiza en estadísticas y valores p reportados, el p se recalcula a partir de la estadística, cada informe se juzga consistente o inconsistente con un intervalo de caracteres exacto, y los hallazgos se convierten en un resumen, un elemento de evidencia REP v1 y salida Markdown/SARIF; las etiquetas del diagrama son los nombres reales de herramientas, comprobaciones e incidencias">
@@ -48,7 +47,7 @@
 
 | | |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.2.2-rc.4`** (verificado 2026-11-18); línea peer `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0` |
+| DeepSeek Harness | **`dsh-v0.2.3-alpha.1`** (verificado 2026-11-22); línea peer `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0` |
 | Node | `^22.19.0 \|\| >=24.9.0` (probado en `24.22.1`), solo ESM |
 | Peers | `@perrylink/dsh-research-core ^0.1.0`, `@deepseek-ai/cordis ^4.0.5-alpha.1`, `@deepseek-ai/dsh-tools`, `@deepseek-ai/schemastery ^3.18.5-alpha.1` |
 | Dependencias en tiempo de ejecución | **cero** |
@@ -101,7 +100,6 @@ El `0.001` extra absorbe el hecho de que la estadística en sí suele reportarse
 ![dsh-statcheck benchmark: una ejecución real sobre 30 casos de estadística congelados — precision, recall y F1 de inconsistencia valen 1, la tasa de falsos positivos en muestras limpias es 0 y la exactitud global es 1](docs/assets/dsh-statcheck-demo.gif)
 
 *Animado: la salida real por stdout del adaptador de benchmark sobre los 30 casos de estadística congelados (`node bench/run-stats.mjs` con `BENCH_DIR` apuntando al checkout congelado de `dsh-research-bench`, sin red; reejecutado el 2026-11-21). Las puntuaciones perfectas describen solo estos casos construidos alrededor de valores críticos — la advertencia de alcance de abajo sigue aplicando.*
-
 
 ### Benchmark — `dsh-research-bench` stats v0.1.0 (30 casos)
 

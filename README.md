@@ -28,7 +28,6 @@
 - Checks the CI against significance (a significant p with a CI that includes 0 is a contradiction).
 - Emits Markdown and **SARIF 2.1.0**, and registers the analyzed text as a REP v1 evidence item whose checks are the findings.
 
-
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-statcheck-flow-v5-dark.svg">
   <img src="docs/assets/dsh-statcheck-flow-v5-light.svg" width="100%" alt="dsh-statcheck structure: an APA-style report is parsed into statistics and reported p values, the p value is recomputed from the statistic, each report is judged consistent or inconsistent with an exact character range, and the findings become a summary, a REP v1 evidence item and Markdown/SARIF output; the labels inside the diagram are the real tool, check and issue names">
@@ -48,7 +47,7 @@
 
 | | |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.2.2-rc.4`** (verified 2026-11-18); peer line `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0` |
+| DeepSeek Harness | **`dsh-v0.2.3-alpha.1`** (verified 2026-11-22); peer line `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0` |
 | Node | `^22.19.0 \|\| >=24.9.0` (tested on `24.22.1`), ESM only |
 | Peers | `@perrylink/dsh-research-core ^0.1.0`, `@deepseek-ai/cordis ^4.0.5-alpha.1`, `@deepseek-ai/dsh-tools`, `@deepseek-ai/schemastery ^3.18.5-alpha.1` |
 | Runtime dependencies | **zero** |
@@ -101,7 +100,6 @@ The extra `0.001` absorbs the fact that the statistic itself is often reported r
 ![dsh-statcheck benchmark: a real run over 30 frozen statistics cases — inconsistent precision, recall and F1 are 1, the clean false-positive rate is 0, and exact accuracy is 1](docs/assets/dsh-statcheck-demo.gif)
 
 *Animated: the benchmark adapter's real stdout over the 30 frozen statistics cases (`node bench/run-stats.mjs` with `BENCH_DIR` pointing at the frozen `dsh-research-bench` checkout, no network; re-run 2026-11-21). The perfect scores describe these constructed critical-value cases only — the scope warning below still applies.*
-
 
 ### Benchmark — `dsh-research-bench` stats v0.1.0 (30 cases)
 

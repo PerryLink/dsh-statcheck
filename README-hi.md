@@ -28,7 +28,6 @@
 - CI की सार्थकता से तुलना करता है (सार्थक p के साथ ऐसा CI जिसमें 0 शामिल है, एक विरोध है)।
 - Markdown और **SARIF 2.1.0** देता है, और विश्लेषित पाठ को REP v1 साक्ष्य आइटम के रूप में दर्ज करता है जिसकी जाँचें वही निष्कर्ष होती हैं।
 
-
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-statcheck-flow-v5-dark.svg">
   <img src="docs/assets/dsh-statcheck-flow-v5-light.svg" width="100%" alt="dsh-statcheck संरचना: APA शैली की रिपोर्ट को सांख्यिकियों और बताए गए p मानों में पढ़ा जाता है, सांख्यिकी से p दोबारा निकाला जाता है, हर रिपोर्ट को सटीक अक्षर-सीमा के साथ consistent या inconsistent आँका जाता है, और निष्कर्ष एक सारांश, एक REP v1 साक्ष्य आइटम तथा Markdown/SARIF आउटपुट बनते हैं; आरेख के लेबल असली टूल, जाँच और issue नाम हैं">
@@ -48,7 +47,7 @@
 
 | | |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.2.2-rc.4`** (2026-11-18 को सत्यापित); peer पंक्ति `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0` |
+| DeepSeek Harness | **`dsh-v0.2.3-alpha.1`** (2026-11-22 को सत्यापित); peer पंक्ति `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0` |
 | Node | `^22.19.0 \|\| >=24.9.0` (`24.22.1` पर परखा गया), केवल ESM |
 | Peers | `@perrylink/dsh-research-core ^0.1.0`, `@deepseek-ai/cordis ^4.0.5-alpha.1`, `@deepseek-ai/dsh-tools`, `@deepseek-ai/schemastery ^3.18.5-alpha.1` |
 | रनटाइम निर्भरताएँ | **शून्य** |
@@ -101,7 +100,6 @@ t/r/z दो-पुच्छीय हैं; F/χ² ऊपरी-पुच्�
 ![dsh-statcheck बेंचमार्क: 30 जमे हुए सांख्यिकी मामलों पर असली रन — inconsistency precision, recall और F1 तीनों 1 हैं, स्वच्छ नमूनों में झूठी-सकारात्मक दर 0 है और समग्र सटीकता 1 है](docs/assets/dsh-statcheck-demo.gif)
 
 *एनिमेटेड: 30 जमे हुए सांख्यिकी मामलों पर बेंचमार्क एडाप्टर का असली stdout (`node bench/run-stats.mjs`, `BENCH_DIR` जमे हुए `dsh-research-bench` चेकआउट की ओर इंगित; कोई नेटवर्क नहीं; 2026-11-21 को दोबारा चलाया गया)। ये पूर्ण अंक केवल इन कृत्रिम क्रिटिकल-वैल्यू मामलों का वर्णन करते हैं — नीचे दी गई दायरा-चेतावनी अभी भी लागू है।*
-
 
 ### बेंचमार्क — `dsh-research-bench` stats v0.1.0 (30 मामले)
 

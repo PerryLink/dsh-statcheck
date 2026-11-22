@@ -28,7 +28,6 @@
 - Confere o CI contra a significância (um p significativo com CI que inclui 0 é uma contradição).
 - Emite Markdown e **SARIF 2.1.0**, e registra o texto analisado como um item de evidência REP v1 cujas verificações são os achados.
 
-
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-statcheck-flow-v5-dark.svg">
   <img src="docs/assets/dsh-statcheck-flow-v5-light.svg" width="100%" alt="dsh-statcheck estrutura: um relato no estilo APA é analisado em estatísticas e valores p relatados, o p é recalculado a partir da estatística, cada relato é julgado consistente ou inconsistente com um intervalo de caracteres exato, e os achados viram um resumo, um item de evidência REP v1 e saída Markdown/SARIF; os rótulos do diagrama são os nomes reais de ferramentas, verificações e ocorrências">
@@ -48,7 +47,7 @@
 
 | | |
 |---|---|
-| DeepSeek Harness | **`dsh-v0.2.2-rc.4`** (verificado em 2026-11-18); linha peer `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0` |
+| DeepSeek Harness | **`dsh-v0.2.3-alpha.1`** (verificado em 2026-11-22); linha peer `>=0.2.1-0 <0.3.0 \|\| >=0.2.2-0 <0.3.0` |
 | Node | `^22.19.0 \|\| >=24.9.0` (testado em `24.22.1`), somente ESM |
 | Peers | `@perrylink/dsh-research-core ^0.1.0`, `@deepseek-ai/cordis ^4.0.5-alpha.1`, `@deepseek-ai/dsh-tools`, `@deepseek-ai/schemastery ^3.18.5-alpha.1` |
 | Dependências em tempo de execução | **zero** |
@@ -101,7 +100,6 @@ O `0.001` extra absorve o fato de que a própria estatística costuma ser relata
 ![dsh-statcheck benchmark: uma execução real sobre 30 casos de estatística congelados — precision, recall e F1 de inconsistência valem 1, a taxa de falsos positivos em amostras limpas é 0 e a exatidão global é 1](docs/assets/dsh-statcheck-demo.gif)
 
 *Animado: a saída real por stdout do adaptador de benchmark sobre os 30 casos de estatística congelados (`node bench/run-stats.mjs` com `BENCH_DIR` apontando para o checkout congelado de `dsh-research-bench`, sem rede; reexecutado em 2026-11-21). As pontuações perfeitas descrevem apenas estes casos construídos em torno de valores críticos — o aviso de escopo abaixo continua valendo.*
-
 
 ### Benchmark — `dsh-research-bench` stats v0.1.0 (30 casos)
 
