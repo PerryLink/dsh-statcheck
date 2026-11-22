@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Stat Check",
+    "description": "Recompute the statistics a manuscript reports — and flag the ones that do not add up."
+  }
+}

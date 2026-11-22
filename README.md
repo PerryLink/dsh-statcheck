@@ -7,6 +7,8 @@
 
 # dsh-statcheck
 
+当前版本 `0.1.4`。
+
 **Recompute the statistics a manuscript reports — and flag the ones that do not add up.**
 
 *It is arithmetic, not accusation: each finding shows the reported statistic, the p value it actually implies, and the exact characters it came from.*
